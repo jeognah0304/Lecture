@@ -1,0 +1,5 @@
+"fruits"@"price"@"quantity"
+"1"@"banana"@300@5
+"2"@"apple"@500@2
+"3"@" peach"@300@4
+"4"@"grape"@600@7
