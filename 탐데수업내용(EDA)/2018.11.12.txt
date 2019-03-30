@@ -1,0 +1,59 @@
+rm(list=ls())
+d1 <- read.csv(file="C:/Users/3f5/Desktop/연습.csv")
+install.packages("dplyr")
+library("dplyr")
+#1
+d1 %>% 
+  filter(성별 ==1)
+
+#2
+d1 %>% 
+  filter(성별 ==1) %>% 
+  filter(연령==2)
+
+#3
+d1 %>% 
+  filter(연령 == c(1,4))
+
+#4
+d1[,c(2,4)]
+
+#5
+d1 %>% 
+  filter(성별 == 1) %>% 
+  filter(연령 == 3) %>% 
+  select(생활비)
+
+#############################################
+
+
+
+rm(list=ls())
+install.packages("dplyr")
+install.packages("ggiraphExtra")
+install.packages("tibble")
+install.packages("maps")
+install.packages("ggplot2")
+install.packages("mapproj")
+library(dplyr)
+library(ggiraphExtra)
+library(tibble)
+library(maps)
+library(ggplot2)
+library(mapproj)
+
+###ggiraphExtra패키지를 깔면 USArrests자료를 사용할 수 있음
+
+head(USArrests)
+
+###USArrests 특징 : 지역명이 행이름으로 되어 있음 행이름을 지역변수로 생성해야됨
+
+##tibble이 행이름을 관련 (dplyr있어야 깔린다)
+
+crime <- rownames_to_column(USArrests, var = "state")
+crime$state <- tolower(crime$state)
+states_map <- map_data("state") ; states_map
+ggChoropleth(crime,aes(fill=Murder, map_id=state),map = states_map)
+
+ggChoropleth(crime,aes(fill=Murder, map_id=state),map = states_map, interactive=T)
+
