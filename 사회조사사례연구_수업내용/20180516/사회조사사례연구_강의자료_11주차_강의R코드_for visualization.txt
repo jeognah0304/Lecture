@@ -1,0 +1,553 @@
+
+    rm(list=ls())
+    library(graphics)
+    library(MASS)
+    library(outliers)
+    
+    location <- "d:/환자조사/2012년도 환자조사 심층분석/R_code/plot/"
+    
+     
+    all.data <- read.csv("d:/환자조사/2012년도 환자조사 심층분석/R_code/퇴원_노령2012_다빈도질환5.csv",header=T)
+
+    qnt <-quantile(all.data$dv18, probs= 0.95)
+    
+    data <- all.data[all.data$dv18 <= qnt,]
+
+
+
+    #############################################
+    # 노령층 전체 재원일수 분포 : boxplot       #
+    #############################################
+
+    data_65 <-data[data$dv28==15,]
+    data_70 <-data[data$dv28==16,]    
+    data_75 <-data[data$dv28==17,]
+    data_80 <-data[data$dv28==18,]
+
+
+
+    file <- paste(location ,"노령층 전체 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=640,height=640,quality=100)
+    
+      boxplot(data_65$dv18, data_70$dv18, data_75$dv18, data_80$dv18
+		, names=c("65-69","70-74","75-79","80+") )
+  
+
+    dev.off()
+
+
+
+    ##############################################
+    #  연령별, 질환별 재원일수 분포 : 4 개 그림  #
+    #                                            #
+    #  다빈도질환: dv20 :code  dv19: 2           #
+    ##############################################
+    
+    data_65_c <-data_65[data_65$dv19==2,]
+    data_65_i <-data_65[data_65$dv19==9,]
+    data_65_j <-data_65[data_65$dv19==10,]
+    data_65_m <-data_65[data_65$dv19==13,]    
+    data_65_s <-data_65[data_65$dv19==19,]
+
+
+
+    file <- paste(location ,"65세 질환별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=640,quality=100)
+
+    plot(density (data_65_c$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.14),main="65-69", xlab="재원일수")   	
+    lines(density(data_65_i$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_65_j$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_65_m$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_65_s$dv18), col=5, lty=5, lwd=3)
+
+  legend("topright", c("신생물", "순환기","호흡기", "근육골격","상해손상"),col=1:5, lty = 1:5, lwd=3,cex=1.2)
+
+
+   dev.off()
+
+
+
+
+    data_70_c <-data_70[data_70$dv19==2,]
+    data_70_i <-data_70[data_70$dv19==9,]
+    data_70_j <-data_70[data_70$dv19==10,]
+    data_70_m <-data_70[data_70$dv19==13,]    
+    data_70_s <-data_70[data_70$dv19==19,]
+
+
+
+    file <- paste(location ,"70세 질환별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=640,quality=100)
+
+    plot(density (data_70_c$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.14),main="70-74", xlab="재원일수")   	
+    lines(density(data_70_i$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_70_j$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_70_m$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_70_s$dv18), col=5, lty=5, lwd=3)
+
+  legend("topright", c("신생물", "순환기","호흡기", "근육골격","상해손상"),col=1:5, lty = 1:5, lwd=3,cex=1.2)
+
+
+   dev.off()
+
+
+
+
+
+
+
+   data_75_c <-data_75[data_75$dv19==2,]
+    data_75_i <-data_75[data_75$dv19==9,]
+    data_75_j <-data_75[data_75$dv19==10,]
+    data_75_m <-data_75[data_75$dv19==13,]    
+    data_75_s <-data_75[data_75$dv19==19,]
+
+
+
+    file <- paste(location ,"75세 질환별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=640,quality=100)
+
+    plot(density (data_75_c$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.14),main="75-79", xlab="재원일수")   	
+    lines(density(data_75_i$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_75_j$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_75_m$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_75_s$dv18), col=5, lty=5, lwd=3)
+
+  legend("topright", c("신생물", "순환기","호흡기", "근육골격","상해손상"),col=1:5, lty = 1:5, lwd=3,cex=1.2)
+
+
+   dev.off()
+
+
+
+
+
+   data_80_c <-data_80[data_80$dv19==2,]
+    data_80_i <-data_80[data_80$dv19==9,]
+    data_80_j <-data_80[data_80$dv19==10,]
+    data_80_m <-data_80[data_80$dv19==13,]    
+    data_80_s <-data_80[data_80$dv19==19,]
+
+
+
+    file <- paste(location ,"80세 질환별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=640,quality=100)
+
+    plot(density (data_80_c$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.14),main="80+", xlab="재원일수")   	
+    lines(density(data_80_i$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_80_j$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_80_m$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_80_s$dv18), col=5, lty=5, lwd=3)
+
+  legend("topright", c("신생물", "순환기","호흡기", "근육골격","상해손상"),col=1:5, lty = 1:5, lwd=3,cex=1.2)
+
+
+   dev.off()
+
+
+
+    file <- paste(location ,"노령층 연령별 질환별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=1300,quality=100)
+
+
+par(mfrow=c(4,2))
+
+
+
+  plot(density (data_65_c$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.14),main=list("65-69", cex=3), xlab=list("재원일수",cex=2.5))   	
+    lines(density(data_65_i$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_65_j$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_65_m$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_65_s$dv18), col=5, lty=5, lwd=3)
+
+  legend("topright", c("신생물", "순환기","호흡기", "근육골격","상해손상"),col=1:5, lty = 1:5, lwd=3,cex=1.3)
+
+ boxplot(data_65_c$dv18, data_65_i$dv18, data_65_j$dv18 , data_65_m$dv18 ,data_65_s$dv18 
+		, names=c("신생물", "순환기","호흡기", "근육골격","상해손상"),ylab=list("재원일수" ,cex=2))
+  
+
+
+   plot(density (data_70_c$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.14),main=list("70-74", cex=3), xlab=list("재원일수",cex=2.5))    	
+    lines(density(data_70_i$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_70_j$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_70_m$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_70_s$dv18), col=5, lty=5, lwd=3)
+
+  legend("topright", c("신생물", "순환기","호흡기", "근육골격","상해손상"),col=1:5, lty = 1:5, lwd=3,cex=1.3)
+
+ boxplot(data_70_c$dv18, data_70_i$dv18, data_70_j$dv18 , data_70_m$dv18 ,data_70_s$dv18 
+		, names=c("신생물", "순환기","호흡기", "근육골격","상해손상"),ylab=list("재원일수" ,cex=2))
+ 
+
+    plot(density (data_75_c$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.14),main=list("75-79", cex=3), xlab=list("재원일수",cex=2.5))   	
+    lines(density(data_75_i$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_75_j$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_75_m$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_75_s$dv18), col=5, lty=5, lwd=3)
+
+  legend("topright", c("신생물", "순환기","호흡기", "근육골격","상해손상"),col=1:5, lty = 1:5, lwd=3,cex=1.3)
+
+ boxplot(data_75_c$dv18, data_75_i$dv18, data_75_j$dv18 , data_75_m$dv18 ,data_75_s$dv18 
+		, names=c("신생물", "순환기","호흡기", "근육골격","상해손상"),ylab=list("재원일수" ,cex=2))
+  
+
+
+   plot(density (data_80_c$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.14),main=list("80+", cex=3), xlab=list("재원일수",cex=2.5))    	
+    lines(density(data_80_i$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_80_j$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_80_m$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_80_s$dv18), col=5, lty=5, lwd=3)
+
+  legend("topright", c("신생물", "순환기","호흡기", "근육골격","상해손상"),col=1:5, lty = 1:5, lwd=3,cex=1.3)
+
+boxplot(data_80_c$dv18, data_80_i$dv18, data_80_j$dv18 , data_80_m$dv18 ,data_80_s$dv18 
+		, names=c("신생물", "순환기","호흡기", "근육골격","상해손상"),ylab=list("재원일수" ,cex=2))
+   
+
+
+   dev.off()
+
+
+
+
+    ################################################
+    #  연령별, 의료기관별 재원일수 분포 : 6개 그림 #
+    #                                              #
+    #  의료기관별: 의료기관종류                    #
+    ################################################
+    
+    data_65_1 <-data_65[data_65$의료기관종류==1,]
+    data_65_2 <-data_65[data_65$의료기관종류==2,]
+    data_65_3 <-data_65[data_65$의료기관종류==3,]
+    data_65_4 <-data_65[data_65$의료기관종류==4,]
+    data_65_5 <-data_65[data_65$의료기관종류==5,]
+    data_65_6 <-data_65[data_65$의료기관종류==6,]
+
+
+
+    file <- paste(location ,"65세_ 의료기관별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=640,quality=100)
+
+    plot(density (data_65_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.11),main="65-69", xlab="재원일수")   	
+    lines(density(data_65_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_65_3$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_65_4$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_65_5$dv18), col=5, lty=5, lwd=3)
+    lines(density(data_65_6$dv18), col=6, lty=6, lwd=3)
+
+  legend("topright", c("의원", "종합병원급","병원", "보건기관","한방의료기관" ,"요양기관"),col=1:6, lty = 1:6, lwd=3,cex=1.2)
+
+
+   dev.off()
+
+
+    data_70_1 <-data_70[data_70$의료기관종류==1,]
+    data_70_2 <-data_70[data_70$의료기관종류==2,]
+    data_70_3 <-data_70[data_70$의료기관종류==3,]
+    data_70_4 <-data_70[data_70$의료기관종류==4,]
+    data_70_5 <-data_70[data_70$의료기관종류==5,]
+    data_70_6 <-data_70[data_70$의료기관종류==6,]
+
+
+    file <- paste(location ,"70세 의료기관별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=640,quality=100)
+
+    plot(density (data_70_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.11),main="70-74", xlab="재원일수")   	
+    lines(density(data_70_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_70_3$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_70_4$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_70_5$dv18), col=5, lty=5, lwd=3)
+    lines(density(data_70_6$dv18), col=6, lty=6, lwd=3)
+
+  legend("topright", c("의원", "종합병원급","병원", "보건기관","한방의료기관" ,"요양기관"),col=1:6, lty = 1:6, lwd=3,cex=1.2)
+
+
+   dev.off()
+
+
+
+
+    data_75_1 <-data_75[data_75$의료기관종류==1,]
+    data_75_2 <-data_75[data_75$의료기관종류==2,]
+    data_75_3 <-data_75[data_75$의료기관종류==3,]
+    data_75_4 <-data_75[data_75$의료기관종류==4,]
+    data_75_5 <-data_75[data_75$의료기관종류==5,]
+    data_75_6 <-data_75[data_75$의료기관종류==6,]
+
+
+    file <- paste(location ,"75세 의료기관별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=640,quality=100)
+
+     plot(density (data_75_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.11),main="75-79", xlab="재원일수")   	
+    lines(density(data_75_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_75_3$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_75_4$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_75_5$dv18), col=5, lty=5, lwd=3)
+    lines(density(data_75_6$dv18), col=6, lty=6, lwd=3)
+
+  
+
+  legend("topright", c("의원", "종합병원급","병원", "보건기관","한방의료기관" ,"요양기관"),col=1:6, lty = 1:6, lwd=3,cex=1.2)
+
+
+   dev.off()
+
+
+
+
+
+    data_80_1 <-data_80[data_80$의료기관종류==1,]
+    data_80_2 <-data_80[data_80$의료기관종류==2,]
+    data_80_3 <-data_80[data_80$의료기관종류==3,]
+    data_80_4 <-data_80[data_80$의료기관종류==4,]
+    data_80_5 <-data_80[data_80$의료기관종류==5,]
+    data_80_6 <-data_80[data_80$의료기관종류==6,]
+
+
+    file <- paste(location ,"80세 의료기관별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=640,quality=100)
+
+    plot(density (data_80_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.11),main="80+", xlab="재원일수")   	
+    lines(density(data_80_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_80_3$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_80_4$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_80_5$dv18), col=5, lty=5, lwd=3)
+    lines(density(data_80_6$dv18), col=6, lty=6, lwd=3)
+
+ 
+  legend("topright", c("의원", "종합병원급","병원", "보건기관","한방의료기관" ,"요양기관"),col=1:6, lty = 1:6, lwd=3,cex=1.2)
+
+
+   dev.off()
+
+
+
+
+
+    file <- paste(location ,"노령층 연령별 의료기관별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=1300,quality=100)
+
+
+par(mfrow=c(4,2))
+
+
+  plot(density (data_65_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.11),main=list("65-69", cex=3), xlab=list("재원일수",cex=2.5))   	
+    lines(density(data_65_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_65_3$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_65_4$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_65_5$dv18), col=5, lty=5, lwd=3)
+    lines(density(data_65_6$dv18), col=6, lty=6, lwd=3)
+
+ 
+  legend("topright", c("의원", "종합병원급","병원", "보건기관","한방의료기관" ,"요양기관"),col=1:6, lty = 1:6, lwd=3,cex=1.3)
+
+
+  boxplot(data_65_1$dv18, data_65_2$dv18, data_65_3$dv18 , data_65_4$dv18 ,data_65_5$dv18 ,data_65_6$dv18
+		, names=c("의원", "종합병원급","병원", "보건기관","한방의료기관" ,"요양기관"),ylab=list("재원일수" ,cex=2))
+  
+
+
+
+
+    plot(density (data_70_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.11),main=list("70-74", cex=3), xlab=list("재원일수",cex=2.5))   	
+    lines(density(data_70_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_70_3$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_70_4$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_70_5$dv18), col=5, lty=5, lwd=3)
+    lines(density(data_70_6$dv18), col=6, lty=6, lwd=3)
+
+ 
+  legend("topright", c("의원", "종합병원급","병원", "보건기관","한방의료기관" ,"요양기관"),col=1:6, lty = 1:6, lwd=3,cex=1.3)
+
+
+
+  boxplot(data_70_1$dv18, data_70_2$dv18, data_70_3$dv18 , data_70_4$dv18 ,data_70_5$dv18 ,data_70_6$dv18
+		, names=c("의원", "종합병원급","병원", "보건기관","한방의료기관" ,"요양기관"),ylab=list("재원일수" ,cex=2))
+  
+
+
+      plot(density (data_75_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.11),main=list("75-79", cex=3), xlab=list("재원일수",cex=2.5))   	
+    lines(density(data_75_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_75_3$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_75_4$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_75_5$dv18), col=5, lty=5, lwd=3)
+    lines(density(data_75_6$dv18), col=6, lty=6, lwd=3)
+
+  legend("topright", c("의원", "종합병원급","병원", "보건기관","한방의료기관" ,"요양기관"),col=1:6, lty = 1:6, lwd=3,cex=1.3)
+
+
+
+  boxplot(data_75_1$dv18, data_75_2$dv18, data_75_3$dv18 , data_75_4$dv18 ,data_75_5$dv18 ,data_75_6$dv18
+		, names=c("의원", "종합병원급","병원", "보건기관","한방의료기관" ,"요양기관"),ylab=list("재원일수" ,cex=2))
+  
+
+
+    plot(density (data_80_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.11),main=list("80+", cex=3), xlab=list("재원일수",cex=2.5))   	
+    lines(density(data_80_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_80_3$dv18), col=3, lty=3, lwd=3)
+    lines(density(data_80_4$dv18), col=4, lty=4, lwd=3)
+    lines(density(data_80_5$dv18), col=5, lty=5, lwd=3)
+    lines(density(data_80_6$dv18), col=6, lty=6, lwd=3)
+
+ 
+  legend("topright", c("의원", "종합병원급","병원", "보건기관","한방의료기관" ,"요양기관"),col=1:6, lty = 1:6, lwd=3,cex=1.3)
+
+
+
+  boxplot(data_80_1$dv18, data_80_2$dv18, data_80_3$dv18 , data_80_4$dv18 ,data_80_5$dv18 ,data_80_6$dv18
+		, names=c("의원", "종합병원급","병원", "보건기관","한방의료기관" ,"요양기관"),ylab=list("재원일수" ,cex=2))
+  
+
+
+
+   dev.off()
+
+
+
+    ####################################################
+    #  연령별, 진료비지불방법 재원일수 분포 : 3개 그림 #
+    #                                                  #
+    #  진료비지불방법별: 진료비지불방법                #
+    ####################################################
+    
+    data_65_1 <-data_65[data_65$진료비지불방법==1,]
+    data_65_2 <-data_65[data_65$진료비지불방법==2,]
+    data_65_3 <-data_65[data_65$진료비지불방법==3,]
+  
+
+    file <- paste(location ,"65세_ 진료비지불방법별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=640,quality=100)
+
+    plot(density (data_65_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.09),main="65-69", xlab="재원일수")   	
+    lines(density(data_65_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_65_3$dv18), col=3, lty=3, lwd=3)
+ 
+
+  legend("topright", c("건강보험", "의료급여","기타"),col=1:3, lty = 1:3, lwd=3,cex=1.2)
+
+
+   dev.off()
+
+
+    data_70_1 <-data_70[data_70$진료비지불방법==1,]
+    data_70_2 <-data_70[data_70$진료비지불방법==2,]
+    data_70_3 <-data_70[data_70$진료비지불방법==3,]
+
+
+    file <- paste(location ,"70세 진료비지불방법별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=640,quality=100)
+
+    plot(density (data_70_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.09),main="70-74", xlab="재원일수")   	
+    lines(density(data_70_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_70_3$dv18), col=3, lty=3, lwd=3)
+ 
+ legend("topright", c("건강보험", "의료급여","기타"),col=1:3, lty = 1:3, lwd=3,cex=1.2)
+
+
+   dev.off()
+
+
+
+
+    data_75_1 <-data_75[data_75$진료비지불방법==1,]
+    data_75_2 <-data_75[data_75$진료비지불방법==2,]
+    data_75_3 <-data_75[data_75$진료비지불방법==3,]
+
+
+    file <- paste(location ,"75세 진료비지불방법별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=640,quality=100)
+
+     plot(density (data_75_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.09),main="75-79", xlab="재원일수")   	
+    lines(density(data_75_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_75_3$dv18), col=3, lty=3, lwd=3)
+ 
+  
+legend("topright", c("건강보험", "의료급여","기타"),col=1:3, lty = 1:3, lwd=3,cex=1.2)
+
+
+   dev.off()
+
+
+
+
+
+    data_80_1 <-data_80[data_80$진료비지불방법==1,]
+    data_80_2 <-data_80[data_80$진료비지불방법==2,]
+    data_80_3 <-data_80[data_80$진료비지불방법==3,]
+ 
+
+    file <- paste(location ,"80세 진료비지불방법별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=640,quality=100)
+
+  
+
+
+  plot(density (data_80_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.09),main="80+", xlab="재원일수")   	
+    lines(density(data_80_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_80_3$dv18), col=3, lty=3, lwd=3)
+   
+
+  
+legend("topright", c("건강보험", "의료급여","기타"),col=1:3, lty = 1:3, lwd=3,cex=1.2)
+ 
+
+
+   dev.off()
+
+
+
+
+
+    file <- paste(location ,"노령층 연령별 진료비지불방법별 재원일수분포",".jpg",sep="")
+               jpeg(file,pointsize=10,width=900,height=1300,quality=100)
+
+
+par(mfrow=c(4,2))
+
+    plot(density (data_65_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.09),main=list("65-69", cex=3), xlab=list("재원일수",cex=2.5))   	
+    lines(density(data_65_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_65_3$dv18), col=3, lty=3, lwd=3)
+ 
+ legend("topright", c("건강보험", "의료급여","기타"),col=1:3, lty = 1:3, lwd=3,cex=1.3)
+
+ 
+   boxplot(data_65_1$dv18, data_65_2$dv18, data_65_3$dv18
+		, names=c("건강보험", "의료급여","기타"),ylab=list("재원일수" ,cex=2))
+  
+
+    plot(density (data_70_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.09),main=list("70-74", cex=3), xlab=list("재원일수",cex=2.5))   	
+    lines(density(data_70_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_70_3$dv18), col=3, lty=3, lwd=3)
+ 
+  legend("topright", c("건강보험", "의료급여","기타"),col=1:3, lty = 1:3, lwd=3,cex=1.3)
+
+
+  boxplot(data_70_1$dv18, data_70_2$dv18, data_70_3$dv18
+		, names=c("건강보험", "의료급여","기타"),ylab=list("재원일수" ,cex=2))
+  
+
+
+       plot(density (data_75_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.09),main=list("75-79", cex=3), xlab=list("재원일수",cex=2.5))   	
+    lines(density(data_75_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_75_3$dv18), col=3, lty=3, lwd=3)
+ 
+  legend("topright", c("건강보험", "의료급여","기타"),col=1:3, lty = 1:3, lwd=3,cex=1.3)
+
+  boxplot(data_75_1$dv18, data_75_2$dv18, data_75_3$dv18
+		, names=c("건강보험", "의료급여","기타"),ylab=list("재원일수" ,cex=2))
+  
+   
+
+    plot(density (data_80_1$dv18), col=1, lty=1, lwd=3, ylim=c(0,0.09),main=list("80+", cex=3), xlab=list("재원일수",cex=2.5))   	
+    lines(density(data_80_2$dv18), col=2, lty=2, lwd=3)
+    lines(density(data_80_3$dv18), col=3, lty=3, lwd=3) 
+ 
+  legend("topright", c("건강보험", "의료급여","기타"),col=1:3, lty = 1:3, lwd=3,cex=1.3)
+ 
+ boxplot(data_80_1$dv18, data_80_2$dv18, data_80_3$dv18
+		, names=c("건강보험", "의료급여","기타"),ylab=list("재원일수" ,cex=2) )
+  
+
+   dev.off()
+
+
